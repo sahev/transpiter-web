@@ -219,7 +219,6 @@ export default {
   methods: {
     spli() {
         let str = this.localFrete.fre_carga;
-        console.log(str);
     },
     emitClick() {
       this.localDialog = !this.localDialog;

@@ -2,12 +2,18 @@
   <v-row justify="center">
     <v-dialog
       v-model="dialog"
-      fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
     >
-      <v-card>
-        <v-toolbar dark color="primary">
+      <v-card class="overflow-hidden">
+        <!-- <v-app-bar absolute
+      color="#6A76AB"
+      dark
+      shrink-on-scroll
+      prominent
+      src="https://picsum.photos/1920/1080?random"
+      fade-img-on-scroll
+      scroll-target="#scrolling-techniques-4">
           <v-btn
             icon
             dark
@@ -16,12 +22,12 @@
           >
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>Cadastrar novo carregamento</v-toolbar-title>
+          <v-app-bar>Cadastrar novo carregamento</v-app-bar>
           <v-spacer></v-spacer>
-          <v-toolbar-items>
+          <v-app-bar>
             <v-btn dark text @click="saveFrete()"> Salvar </v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
+          </v-app-bar>
+        </v-app-bar> -->
         <v-list three-line subheader>
           <v-subheader>Frete</v-subheader>
         </v-list>
@@ -81,21 +87,27 @@
               </v-col>
 
               <v-col cols="12" sm="6" md="6">
-                <v-text-field
+                <v-text-field-percent
                   v-model="frete.fre_porc_icms"
                   label="ICMS"
-                  hint="Porcentagem de imposto sobre Circulação de Mercadorias e Prestação de Serviços"
-                  required
-                ></v-text-field>
+                  v-bind:properties="{
+                    suffix: '%',
+                    hint: 'Porcentagem de imposto sobre Circulação de Mercadorias e Prestação de Serviços',
+                    required: true
+                  }"
+                ></v-text-field-percent>
               </v-col>
 
               <v-col cols="12" sm="6" md="6">
-                <v-text-field
+                <v-text-field-percent
                   v-model="frete.fre_porc_manutencao"
                   label="Manutenção"
-                  hint="Porcentagem de manutenção"
-                  required
-                ></v-text-field>
+                  v-bind:properties="{
+                    suffix: '%',
+                    hint: 'Porcentagem de manutenção',
+                    required: true
+                  }"
+                ></v-text-field-percent>
               </v-col>
 
               <v-col cols="12" sm="6" md="6">
@@ -107,12 +119,15 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6">
-                <v-text-field
+                <v-text-field-money
                   v-model="frete.fre_valorkm"
                   label="Valor p/ Km"
-                  hint="Valor por kilômetro rodado"
-                  required
-                ></v-text-field>
+                  v-bind:properties="{
+                    prefix: 'R$',
+                    hint: 'Valor por kilômetro rodado',
+                    required: true
+                  }"
+                ></v-text-field-money>
               </v-col>
             </v-row>
           </v-container>
@@ -126,12 +141,14 @@
           <v-container>
             <v-row>
               <v-col cols="6" sm="6">
-                <v-text-field
+                <v-text-field-money
                   v-model="frete.custo.cus_vaziobase"
-                  label="Custo Vazio"
-                  hint="Custo Vazio Base X Matriz"
-                  required
-                ></v-text-field>
+                  label="Custo Vazio - Base X Matriz"
+                  v-bind:properties="{
+                    prefix: 'R$',
+                    required: true
+                  }"
+                ></v-text-field-money>
               </v-col>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
@@ -142,11 +159,14 @@
               </v-col>
 
               <v-col cols="6" sm="6">
-                <v-text-field
+                <v-text-field-money
                   v-model="frete.custo.cus_carregado"
                   label="Custo Carregado"
-                  required
-                ></v-text-field>
+                  v-bind:properties="{
+                    prefix: 'R$',
+                    required: true
+                  }"
+                ></v-text-field-money>
               </v-col>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
@@ -157,12 +177,14 @@
               </v-col>
 
               <v-col cols="6" sm="6">
-                <v-text-field
+                <v-text-field-money
                   v-model="frete.custo.cus_vazioretorno"
-                  label="Custo Vazio Retorno"
-                  hint="Custo Vazio Retorno X Base"
-                  required
-                ></v-text-field>
+                  label="Custo Vazio - Retorno X Base"
+                  v-bind:properties="{
+                    prefix: 'R$',
+                    required: true
+                  }"
+                ></v-text-field-money>
               </v-col>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
@@ -172,29 +194,64 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col cols="12" sm="6" md="6">
-                <v-text-field
+              <v-col cols="12" sm="4" md="4">
+                <v-text-field-money
                   v-model="frete.custo.cus_comissao"
                   label="Comissão"
-                  required
-                ></v-text-field>
+                  v-bind:properties="{
+                    prefix: 'R$',
+                    required: true
+                  }"
+                ></v-text-field-money>
               </v-col>
 
-              <v-col cols="12" sm="6" md="6">
-                <v-text-field
+              <v-col cols="12" sm="4" md="4">
+                <v-text-field-money
                   v-model="frete.custo.cus_salariodia"
                   label="Salário p/ dia"
-                  required
-                ></v-text-field>
+                  v-bind:properties="{
+                    prefix: 'R$',
+                    hint: 'Digite o salário por dia',
+                    required: true
+                  }"
+                ></v-text-field-money>
               </v-col>
 
-              <v-col cols="12" sm="6" md="6">
-                <v-text-field
+              <v-col cols="12" sm="4" md="4">
+                <v-text-field-money
                   v-model="frete.custo.cus_seguro"
                   label="Seguro /p dia"
-                  required
-                ></v-text-field>
+                  v-bind:properties="{
+                    prefix: 'R$',
+                    hint: 'Digite o seguro por dia',
+                    required: true
+                  }"
+                ></v-text-field-money>
               </v-col>
+
+              <v-row align="center" justify="space-around">
+                <v-btn
+                  @click.stop.prevent="emitClick()"
+                  @click="snackbar = false"
+                  color="red darken-1"
+                  outlined
+                  text
+                >
+                  Cancelar
+                </v-btn>
+
+                <v-btn
+                  @click="
+                    edit = false;
+                    saveFrete();
+                  "
+                  color="green darken-1"
+                  outlined
+                  text
+                >
+                  Salvar
+                </v-btn>
+              </v-row>
             </v-row>
           </v-container>
         </v-card-text>
@@ -212,9 +269,6 @@ export default {
     dialog: {
       type: Boolean,
     },
-  },
-  created() {
-    console.log(brasil);
   },
   watch: {
     estadoCar: function () {
